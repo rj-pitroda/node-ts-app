@@ -13,7 +13,9 @@ AppDataSource.initialize()
     console.log("Database connected");
 
     app.listen(ENV_VAR.PORT, () => {
-      console.log(`Server running on port ${ENV_VAR.PORT}`);
+      console.log(
+        `Server running on port ${ENV_VAR.PORT}, http://localhost:${ENV_VAR.PORT}/`
+      );
     });
   })
   .catch((error) => {
