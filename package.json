@@ -7,7 +7,7 @@
     "build": "tsc",
     "lint": "eslint .",
     "start": "node dist/main.js",
-    "entity:generate": "env-cmd -x -e development -- typeorm-model-generator -h $DB_HOST -d $DB_NAME  -x $DB_PASSWORD -p $DB_PORT -e postgres"
+    "entity:generate": "env-cmd -x -e development -- typeorm-model-generator -h $DB_HOST -d $DB_NAME  -x $DB_PASSWORD -p $DB_PORT -e postgres  -o _temp"
   },
   "keywords": [],
   "author": "",
