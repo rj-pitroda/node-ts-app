@@ -11,5 +11,5 @@ export const AppDataSource = new DataSource({
   password: ENV_VAR.DB_PASSWORD,
   synchronize: false,
   logging: false,
-  entities: ["src/entities/*.ts"],
+  entities: ["src/entities/*.entity.ts"],
 });
