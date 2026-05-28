@@ -6,7 +6,8 @@
     "dev": "env-cmd -e development -- tsx watch src/main.ts",
     "build": "tsc",
     "lint": "eslint .",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "entity:generate": "env-cmd -x -e development -- typeorm-model-generator -h $DB_HOST -d $DB_NAME  -x $DB_PASSWORD -p $DB_PORT -e postgres"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "tsx": "^4.22.3",
+    "typeorm-model-generator": "^0.4.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0"
   }
