@@ -11,5 +11,6 @@ const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
 userRouter.get("/", userController.getAll);
+userRouter.get("/:id", userController.getById);
 
 export default userRouter;
