@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { TApiResponse } from "../types/common.type.ts";
-import { ERROR_MESSAGES } from "../constants/error.ts";
+import { ERROR_MESSAGES } from "./constants/error.ts";
 
 const sendResponse = <T>(res: Response, response: TApiResponse<T>) => {
   return res.status(response.statusCode).json(response);
