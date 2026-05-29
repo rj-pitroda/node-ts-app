@@ -13,7 +13,7 @@ export const sendSuccessResponse = <T>(
     message,
     statusCode = StatusCodes.OK,
     data,
-  }: Partial<Omit<TApiResponse<T>, "stack">>
+  }: Partial<Omit<TApiResponse<T>, "stack" | "isSuccess">>
 ) => {
   return sendResponse(res, {
     isSuccess: true,
@@ -30,7 +30,7 @@ export const sendErrorResponse = <T>(
     statusCode = StatusCodes.INTERNAL_SERVER_ERROR,
     data,
     stack,
-  }: TApiResponse<T>
+  }: Partial<Omit<TApiResponse<T>, "isSuccess">>
 ) => {
   return sendResponse(res, {
     isSuccess: false,

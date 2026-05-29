@@ -6,6 +6,9 @@ import { globalErrorMiddleware } from "./middlewares/globalError.middleware.ts";
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(appRouter);
 
 // put this at the end

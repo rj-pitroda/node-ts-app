@@ -9,10 +9,7 @@ export class BaseController<T extends TBaseEntity> {
   getAll = async (_req: Request, res: Response) => {
     const result = await this.service.getAll();
 
-    return res.status(200).json({
-      success: true,
-      data: result,
-    });
+    return sendSuccessResponse(res, { data: result });
   };
 
   getById = async (req: Request, res: Response) => {

@@ -6,6 +6,7 @@ export default {
     PORT: 8080,
     NODE_ENV: "development",
     DB_PASSWORD: "york123",
+    DB_USERNAME: "postgres",
     DB_NAME: "node-learning",
     DB_PORT: 5432,
     DB_HOST: "localhost",
