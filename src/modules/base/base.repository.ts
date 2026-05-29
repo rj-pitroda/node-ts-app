@@ -7,6 +7,8 @@ import {
 import { AppDataSource } from "../../config/db.ts";
 import { ERROR_MESSAGES } from "../../constants/error.ts";
 import { TBaseEntity } from "./base.dto.ts";
+import { AppError } from "../../shared/appError.ts";
+import { StatusCodes } from "http-status-codes";
 
 export class BaseRepository<T extends TBaseEntity> {
   private repository: Repository<T>;
@@ -35,7 +37,11 @@ export class BaseRepository<T extends TBaseEntity> {
     const exRecord = await this.getById(id);
 
     if (!exRecord) {
-      throw new Error(ERROR_MESSAGES.RECORD_ID_NOT_FOUND);
+      throw new AppError(
+        ERROR_MESSAGES.RECORD_ID_NOT_FOUND,
+        StatusCodes.BAD_REQUEST,
+        { id }
+      );
     }
 
     return exRecord;
