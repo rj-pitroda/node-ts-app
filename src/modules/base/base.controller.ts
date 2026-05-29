@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { BaseService } from "./base.service.ts";
 import { TBaseEntity } from "./base.dto.ts";
+import { sendSuccessResponse } from "../../shared/sendResponse.ts";
 
 export class BaseController<T extends TBaseEntity> {
   constructor(private service: BaseService<T>) {}
@@ -18,9 +19,6 @@ export class BaseController<T extends TBaseEntity> {
     const { id } = req.params;
     const result = await this.service.getByIdOrThrow(Number(id));
 
-    return res.status(200).json({
-      success: true,
-      data: result,
-    });
+    return sendSuccessResponse(res, { data: result });
   };
 }

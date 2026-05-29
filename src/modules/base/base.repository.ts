@@ -39,8 +39,7 @@ export class BaseRepository<T extends TBaseEntity> {
     if (!exRecord) {
       throw new AppError(
         ERROR_MESSAGES.RECORD_ID_NOT_FOUND,
-        StatusCodes.BAD_REQUEST,
-        { id }
+        StatusCodes.BAD_REQUEST
       );
     }
 
