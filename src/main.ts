@@ -1,12 +1,11 @@
 import express from "express";
 import { ENV_VAR } from "./utils/helper.ts";
 import { AppDataSource } from "./config/db.ts";
+import appRouter from "./routes/index.ts";
 
 const app = express();
 
-app.use("/", (req, res) => {
-  return res.send("Welcome to Nodejs project");
-});
+app.use(appRouter);
 
 AppDataSource.initialize()
   .then(() => {
