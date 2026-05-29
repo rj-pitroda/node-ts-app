@@ -5,7 +5,7 @@ import {
   Repository,
 } from "typeorm";
 import { AppDataSource } from "../../config/db.ts";
-import { ERROR_MESSAGES } from "../../constants/error.ts";
+import { ERROR_MESSAGES } from "../../shared/constants/error.ts";
 import { TBaseEntity } from "./base.dto.ts";
 import { AppError } from "../../shared/appError.ts";
 import { StatusCodes } from "http-status-codes";
