@@ -1,8 +1,14 @@
-import { DeepPartial, EntityTarget, ObjectLiteral, Repository } from "typeorm";
+import {
+  DeepPartial,
+  EntityTarget,
+  FindOptionsWhere,
+  Repository,
+} from "typeorm";
 import { AppDataSource } from "../../config/db.ts";
 import { ERROR_MESSAGES } from "../../constants/error.ts";
+import { TBaseEntity } from "./base.dto.ts";
 
-export class BaseRepository<T extends ObjectLiteral> {
+export class BaseRepository<T extends TBaseEntity> {
   private repository: Repository<T>;
 
   constructor(entity: EntityTarget<T>) {
@@ -21,7 +27,7 @@ export class BaseRepository<T extends ObjectLiteral> {
 
   getById = async (id: T["id"]): Promise<T | null> => {
     return await this.repository.findOne({
-      where: { id },
+      where: { id } as FindOptionsWhere<T>,
     });
   };
 

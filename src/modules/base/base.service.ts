@@ -1,7 +1,8 @@
-import { DeepPartial, ObjectLiteral } from "typeorm";
+import { DeepPartial } from "typeorm";
 import { BaseRepository } from "./base.repository.ts";
+import { TBaseEntity } from "./base.dto.ts";
 
-export class BaseService<T extends ObjectLiteral> {
+export class BaseService<T extends TBaseEntity> {
   constructor(private repo: BaseRepository<T>) {}
 
   create = async (data: DeepPartial<T>): Promise<T> => {
