@@ -56,8 +56,9 @@ export class BaseRepository<T extends TBaseEntity> {
     return id;
   };
 
-  delete = async (id: T["id"]): Promise<T> => {
+  delete = async (id: T["id"]): Promise<T["id"]> => {
     const exRecord = await this.getByIdOrThrow(id);
-    return await this.repository.remove(exRecord);
+    await this.repository.remove(exRecord);
+    return id;
   };
 }

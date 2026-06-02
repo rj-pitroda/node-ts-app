@@ -25,7 +25,7 @@ export class BaseService<T extends TBaseEntity> {
     return await this.repo.update(id, data);
   };
 
-  delete = async (id: T["id"]): Promise<T> => {
+  delete = async (id: T["id"]): Promise<T["id"]> => {
     return await this.repo.delete(id);
   };
 }
