@@ -10,4 +10,7 @@ export class User {
 
   @Column("character varying", { name: "email", length: 200 })
   email!: string;
+
+  @Column("character varying", { name: "password", length: 60 })
+  password!: string;
 }
