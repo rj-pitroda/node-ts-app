@@ -1,4 +1,5 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import { ENV_VAR } from "./utils/helper.ts";
 import { AppDataSource } from "./config/db.ts";
 import appRouter from "./routes/index.ts";
@@ -8,6 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use(appRouter);
 

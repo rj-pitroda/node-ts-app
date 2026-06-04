@@ -1,9 +1,13 @@
 import { Router } from "express";
 import userRouter from "../modules/user/user.route.ts";
+import authRouter from "../modules/auth/auth.route.ts";
 import { sendErrorResponse } from "../shared/sendResponse.ts";
 import { ERROR_MESSAGES } from "../shared/constants/error.ts";
 
 const appRouter = Router();
+
+// auth router
+appRouter.use("/auth", authRouter);
 
 // user router
 appRouter.use("/user", userRouter);

@@ -11,7 +11,7 @@ import { AppError } from "../../shared/appError.ts";
 import { StatusCodes } from "http-status-codes";
 
 export class BaseRepository<T extends TBaseEntity> {
-  private repository: Repository<T>;
+  protected repository: Repository<T>;
 
   constructor(entity: EntityTarget<T>) {
     this.repository = AppDataSource.getRepository(entity);
