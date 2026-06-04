@@ -19,7 +19,7 @@ export const sendSuccessResponse = <T>(
     isSuccess: true,
     message,
     statusCode,
-    data,
+    data: data ? data : {},
   });
 };
 

@@ -5,3 +5,8 @@ export type TApiResponse<T = unknown> = {
   data?: T;
   stack?: string;
 };
+
+export type TUserRequest = {
+  id: number;
+  email: string;
+};

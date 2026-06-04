@@ -6,6 +6,7 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { ERROR_MESSAGES } from "../../shared/constants/error.ts";
 import { StatusCodes } from "http-status-codes";
 import { ENV_VAR } from "../../utils/helper.ts";
+import { ObjectLiteral } from "typeorm";
 
 export class AuthService {
   constructor(private userRepository: UserRepository) {}
@@ -43,17 +44,9 @@ export class AuthService {
 
     const userWithoutPassword = { ...user, password: undefined };
 
-    const accessToken = this.createJwtToken(
-      userWithoutPassword,
-      ENV_VAR.JWT_ACCESS_SECRET,
-      ENV_VAR.JWT_ACCESS_EXPIRES_IN as SignOptions["expiresIn"]
-    );
+    const accessToken = this.generateAccessToken(userWithoutPassword);
 
-    const refreshToken = this.createJwtToken(
-      userWithoutPassword,
-      ENV_VAR.JWT_REFRESH_SECRET,
-      ENV_VAR.JWT_REFRESH_EXPIRES_IN as SignOptions["expiresIn"]
-    );
+    const refreshToken = this.generateRefreshToken(userWithoutPassword);
 
     return {
       user: userWithoutPassword,
@@ -62,15 +55,41 @@ export class AuthService {
     };
   };
 
-  private bcryptPassword = async (password: string): Promise<string> => {
-    return await bcrypt.hash(password, 10);
+  refreshAccessToken = async (refreshToken: string) => {
+    try {
+      const decoded = jwt.verify(
+        refreshToken,
+        ENV_VAR.JWT_REFRESH_SECRET
+      ) as ObjectLiteral;
+
+      const user = await this.userRepository.findByEmailOrFail(decoded.email);
+
+      const userWithoutPassword = { ...user, password: undefined };
+
+      const newAccessToken = this.generateAccessToken(userWithoutPassword);
+
+      return {
+        user: userWithoutPassword,
+        accessToken: newAccessToken,
+      };
+    } catch {
+      throw new AppError(ERROR_MESSAGES.UNAUTHORIZED, StatusCodes.UNAUTHORIZED);
+    }
   };
 
-  private createJwtToken = (
-    payload: object,
-    secret: string,
-    expiresIn: SignOptions["expiresIn"]
-  ) => {
-    return jwt.sign(payload, secret, { expiresIn });
+  private generateAccessToken = (payload: object) => {
+    return jwt.sign(payload, ENV_VAR.JWT_ACCESS_SECRET, {
+      expiresIn: ENV_VAR.JWT_ACCESS_EXPIRES_IN as SignOptions["expiresIn"],
+    });
+  };
+
+  private generateRefreshToken = (payload: object) => {
+    return jwt.sign(payload, ENV_VAR.JWT_REFRESH_SECRET, {
+      expiresIn: ENV_VAR.JWT_REFRESH_EXPIRES_IN as SignOptions["expiresIn"],
+    });
+  };
+
+  private bcryptPassword = async (password: string): Promise<string> => {
+    return await bcrypt.hash(password, 10);
   };
 }

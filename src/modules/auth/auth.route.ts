@@ -14,5 +14,6 @@ const authController = new AuthController(authService);
 
 authRouter.post("/signup", validate(signUpSchema), authController.signUp);
 authRouter.post("/login", validate(loginSchema), authController.login);
+authRouter.post("/refreshAccessToken", authController.refreshAccessToken);
 
 export default authRouter;

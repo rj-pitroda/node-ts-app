@@ -5,4 +5,5 @@ export const ERROR_MESSAGES = {
   USER_ALREADY_EXISTS_BY_EMAIL: "User with the provided email already exists",
   INVALID_CREDENTIALS: "Invalid credentials",
   API_ENDPOINT_NOT_FOUND: "API Endpoint not found",
+  UNAUTHORIZED: "Unauthorized access, please login again",
 };
