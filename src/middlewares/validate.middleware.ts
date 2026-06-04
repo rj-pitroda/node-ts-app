@@ -19,7 +19,7 @@ export const validate = (schema: ZodObject) => {
             : err.path.join("."),
         message: err.message,
       }));
-      const formattedMessage = `Validation failed: ${errorDetails.map((d) => `'${d.field}': ${d.message}`).join(" ")}`;
+      const formattedMessage = `Validation failed: ${errorDetails.map((d) => `'${d.field}': ${d.message}`).join(", ")}`;
       throw new AppError(
         formattedMessage,
         StatusCodes.BAD_REQUEST,
