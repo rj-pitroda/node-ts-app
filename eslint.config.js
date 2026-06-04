@@ -5,6 +5,10 @@ import prettierPlugin from "eslint-plugin-prettier";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
+  {
+    ignores: ["_temp/**"],
+  },
+
   js.configs.recommended,
 
   ...tseslint.configs.recommended,
