@@ -32,7 +32,14 @@ export class AuthService {
   };
 
   login = async (data: TLoginSchema) => {
-    const user = await this.userRepository.findByEmailOrFail(data.email);
+    const user = await this.userRepository.findByEmail(data.email);
+    if (!user) {
+      throw new AppError(
+        ERROR_MESSAGES.INVALID_CREDENTIALS,
+        StatusCodes.UNAUTHORIZED
+      );
+    }
+
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
 
     if (!isPasswordValid) {

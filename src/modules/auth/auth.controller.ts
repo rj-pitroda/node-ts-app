@@ -58,6 +58,21 @@ export class AuthController {
       message: MSG.AUTH.ACCESS_TOKEN_REFRESHED,
     });
   };
+  cookieOptions = {
+    httpOnly: true,
+    secure: ENV_VAR.NODE_ENV === "production",
+    sameSite: "strict" as const,
+    path: "/",
+  };
+
+  logout = async (req: Request, res: Response) => {
+    res.clearCookie("accessToken", this.cookieOptions);
+    res.clearCookie("refreshToken", this.cookieOptions);
+
+    return sendSuccessResponse(res, {
+      message: MSG.AUTH.USER_LOGGED_OUT_SUCCESS,
+    });
+  };
 
   private setCustomCookie = (
     res: Response,
@@ -65,14 +80,8 @@ export class AuthController {
     value: string,
     duration: string
   ) => {
-    const cookieOptions = {
-      httpOnly: true,
-      secure: ENV_VAR.NODE_ENV === "production",
-      sameSite: "strict" as const,
-      path: "/",
-    };
     res.cookie(key, value, {
-      ...cookieOptions,
+      ...this.cookieOptions,
       maxAge: parseDurationToMs(duration),
     });
   };
