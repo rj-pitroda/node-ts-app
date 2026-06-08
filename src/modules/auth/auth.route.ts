@@ -12,7 +12,7 @@ const userRepository = new UserRepository(User);
 const authService = new AuthService(userRepository);
 const authController = new AuthController(authService);
 
-authRouter.post("/signup", validate(signUpSchema), authController.signUp);
+authRouter.post("/register", validate(signUpSchema), authController.signUp);
 authRouter.post("/login", validate(loginSchema), authController.login);
 authRouter.post("/refreshAccessToken", authController.refreshAccessToken);
 authRouter.post("/logout", authController.logout);
