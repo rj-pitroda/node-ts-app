@@ -9,6 +9,7 @@ import {
   updateUserSchema,
   numericIdSchema,
 } from "./user.schema.ts";
+import { authenticateMiddleware } from "../../middlewares/authenticate.middleware.ts";
 
 const userRouter = Router();
 
@@ -16,10 +17,30 @@ const userRepository = new UserRepository(User);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-userRouter.get("/", userController.getAll);
-userRouter.get("/:id", validate(numericIdSchema), userController.getById);
-userRouter.post("/", validate(createUserSchema), userController.create);
-userRouter.put("/:id", validate(updateUserSchema), userController.update);
-userRouter.delete("/:id", validate(numericIdSchema), userController.delete);
+userRouter.get("/", authenticateMiddleware, userController.getAll);
+userRouter.get(
+  "/:id",
+  authenticateMiddleware,
+  validate(numericIdSchema),
+  userController.getById
+);
+userRouter.post(
+  "/",
+  authenticateMiddleware,
+  validate(createUserSchema),
+  userController.create
+);
+userRouter.put(
+  "/:id",
+  authenticateMiddleware,
+  validate(updateUserSchema),
+  userController.update
+);
+userRouter.delete(
+  "/:id",
+  authenticateMiddleware,
+  validate(numericIdSchema),
+  userController.delete
+);
 
 export default userRouter;

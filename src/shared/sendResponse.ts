@@ -36,7 +36,7 @@ export const sendErrorResponse = <T>(
     isSuccess: false,
     message,
     statusCode,
-    data,
+    data: data ? data : {},
     stack,
   });
 };
