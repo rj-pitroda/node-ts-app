@@ -19,6 +19,14 @@ export const ENV_VAR = {
   JWT_REFRESH_SECRET: getRequiredEnv("JWT_REFRESH_SECRET"),
   JWT_ACCESS_EXPIRES_IN: getRequiredEnv("JWT_ACCESS_EXPIRES_IN"),
   JWT_REFRESH_EXPIRES_IN: getRequiredEnv("JWT_REFRESH_EXPIRES_IN"),
+  JWT_RESET_SECRET: getRequiredEnv("JWT_RESET_SECRET"),
+  JWT_RESET_EXPIRES_IN: getRequiredEnv("JWT_RESET_EXPIRES_IN"),
+  SMTP_HOST: getRequiredEnv("SMTP_HOST"),
+  SMTP_PORT: getRequiredEnv("SMTP_PORT"),
+  SMTP_USER: getRequiredEnv("SMTP_USER"),
+  SMTP_PASSWORD: getRequiredEnv("SMTP_PASSWORD"),
+  SMTP_FROM: getRequiredEnv("SMTP_FROM"),
+  FRONTEND_URL: getRequiredEnv("FRONTEND_URL"),
 };
 
 export const parseDurationToMs = (duration: string): number => {
