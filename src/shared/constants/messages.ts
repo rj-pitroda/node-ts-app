@@ -8,5 +8,7 @@ export const MSG = {
     USER_LOGGED_IN_SUCCESS: "User logged in successfully",
     ACCESS_TOKEN_REFRESHED: "Access token refreshed successfully",
     USER_LOGGED_OUT_SUCCESS: "User logged out successfully",
+    PASSWORD_RESET_SUCCESS: "Password reset successfully",
+    PASSWORD_RESET_EMAIL_SENT: "Password reset email sent successfully",
   },
 };

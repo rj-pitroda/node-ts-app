@@ -74,6 +74,24 @@ export class AuthController {
     });
   };
 
+  forgotPassword = async (req: Request, res: Response) => {
+    const { email } = req.body;
+    await this.authService.forgotPassword(email);
+
+    return sendSuccessResponse(res, {
+      message: MSG.AUTH.PASSWORD_RESET_EMAIL_SENT,
+    });
+  };
+
+  resetPassword = async (req: Request, res: Response) => {
+    const { token, password } = req.body;
+    await this.authService.resetPassword(token, password);
+
+    return sendSuccessResponse(res, {
+      message: MSG.AUTH.PASSWORD_RESET_SUCCESS,
+    });
+  };
+
   private setCustomCookie = (
     res: Response,
     key: string,

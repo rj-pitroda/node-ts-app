@@ -6,4 +6,5 @@ export const ERROR_MESSAGES = {
   INVALID_CREDENTIALS: "Invalid credentials",
   API_ENDPOINT_NOT_FOUND: "API Endpoint not found",
   UNAUTHORIZED: "Unauthorized access, please login again",
+  INVALID_RESET_TOKEN: "Invalid or expired reset token",
 };

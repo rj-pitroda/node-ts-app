@@ -26,5 +26,28 @@ export const signUpSchema = z.object({
   }),
 });
 
+export const forgotPasswordSchema = z.object({
+  body: z
+    .object({
+      email: loginSchema.shape.body.shape.email,
+    })
+    .strict(),
+});
+
+export const resetPasswordSchema = z.object({
+  body: z
+    .object({
+      token: z.string({ message: "Token is required." }),
+      password: loginSchema.shape.body.shape.password,
+    })
+    .strict(),
+});
+
 export type TLoginSchema = z.infer<typeof loginSchema.shape.body>;
 export type TSignUpSchema = z.infer<typeof signUpSchema.shape.body>;
+export type TForgotPasswordSchema = z.infer<
+  typeof forgotPasswordSchema.shape.body
+>;
+export type TResetPasswordSchema = z.infer<
+  typeof resetPasswordSchema.shape.body
+>;

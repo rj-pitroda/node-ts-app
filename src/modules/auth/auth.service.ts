@@ -7,9 +7,14 @@ import { ERROR_MESSAGES } from "../../shared/constants/error.ts";
 import { StatusCodes } from "http-status-codes";
 import { ENV_VAR } from "../../utils/helper.ts";
 import { ObjectLiteral } from "typeorm";
+import { getForgotPasswordTemplate } from "../../templates/forgotPassword.template.ts";
+import { EmailService } from "../email/email.service.ts";
 
 export class AuthService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private emailService: EmailService
+  ) {}
 
   signUp = async (data: TSignUpSchema): Promise<boolean> => {
     const user = await this.userRepository.findByEmail(data.email);
@@ -84,6 +89,61 @@ export class AuthService {
     }
   };
 
+  forgotPassword = async (email: string): Promise<boolean> => {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new AppError(
+        ERROR_MESSAGES.USER_NOT_FOUND_BY_EMAIL,
+        StatusCodes.NOT_FOUND
+      );
+    }
+
+    const resetToken = this.generateResetPasswordToken({ email: user.email });
+    const resetLink = `${ENV_VAR.FRONTEND_URL}/reset-password/${resetToken}`;
+
+    const htmlContent = getForgotPasswordTemplate(
+      user.name,
+      user.email,
+      resetLink
+    );
+
+    await this.emailService.sendEmail({
+      to: user.email,
+      subject: "Password Reset Request",
+      html: htmlContent,
+    });
+
+    return true;
+  };
+
+  resetPassword = async (
+    token: string,
+    newPassword: string
+  ): Promise<boolean> => {
+    let email: string;
+    try {
+      const decoded = jwt.verify(
+        token,
+        ENV_VAR.JWT_RESET_SECRET
+      ) as ObjectLiteral;
+      email = decoded.email;
+    } catch {
+      throw new AppError(
+        ERROR_MESSAGES.INVALID_RESET_TOKEN,
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
+    const user = await this.userRepository.findByEmailOrFail(email);
+    const hashedPassword = await this.bcryptPassword(newPassword);
+
+    await this.userRepository.update(user.id, {
+      password: hashedPassword,
+    });
+
+    return true;
+  };
+
   private generateAccessToken = (payload: object) => {
     return jwt.sign(payload, ENV_VAR.JWT_ACCESS_SECRET, {
       expiresIn: ENV_VAR.JWT_ACCESS_EXPIRES_IN as SignOptions["expiresIn"],
@@ -93,6 +153,12 @@ export class AuthService {
   private generateRefreshToken = (payload: object) => {
     return jwt.sign(payload, ENV_VAR.JWT_REFRESH_SECRET, {
       expiresIn: ENV_VAR.JWT_REFRESH_EXPIRES_IN as SignOptions["expiresIn"],
+    });
+  };
+
+  private generateResetPasswordToken = (payload: object) => {
+    return jwt.sign(payload, ENV_VAR.JWT_RESET_SECRET, {
+      expiresIn: ENV_VAR.JWT_RESET_EXPIRES_IN as SignOptions["expiresIn"],
     });
   };
 
