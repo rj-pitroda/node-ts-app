@@ -37,7 +37,7 @@ export class AuthService {
   };
 
   login = async (data: TLoginSchema) => {
-    const user = await this.userRepository.findByEmail(data.email);
+    const user = await this.userRepository.findByEmailWithPassword(data.email);
     if (!user) {
       throw new AppError(
         ERROR_MESSAGES.INVALID_CREDENTIALS,
@@ -54,7 +54,11 @@ export class AuthService {
       );
     }
 
-    const userWithoutPassword = { ...user, password: undefined };
+    const userWithoutPassword = {
+      ...user,
+      password: undefined,
+      role: user.role.name,
+    };
 
     const accessToken = this.generateAccessToken(userWithoutPassword);
 

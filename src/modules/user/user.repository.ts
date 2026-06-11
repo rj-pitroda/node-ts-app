@@ -13,6 +13,24 @@ export class UserRepository extends BaseRepository<User> {
     return user;
   };
 
+  findByEmailWithPassword = async (email: string) => {
+    const user = await this.repository.findOne({
+      where: { email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        role: {
+          name: true,
+        },
+      },
+      relations: { role: true },
+    });
+
+    return user;
+  };
+
   findByEmailOrFail = async (email: string) => {
     const user = await this.repository.findOne({
       where: { email },
