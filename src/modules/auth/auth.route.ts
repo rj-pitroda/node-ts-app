@@ -11,6 +11,7 @@ import {
   resetPasswordSchema,
 } from "./auth.schema.ts";
 import { EmailService } from "../email/email.service.ts";
+import { loginRateLimiter } from "../../middlewares/rateLimit.middleware.ts";
 
 const authRouter = Router();
 
@@ -20,7 +21,12 @@ const authService = new AuthService(userRepository, emailService);
 const authController = new AuthController(authService);
 
 authRouter.post("/register", validate(signUpSchema), authController.signUp);
-authRouter.post("/login", validate(loginSchema), authController.login);
+authRouter.post(
+  "/login",
+  loginRateLimiter,
+  validate(loginSchema),
+  authController.login
+);
 authRouter.post("/refreshAccessToken", authController.refreshAccessToken);
 authRouter.post("/logout", authController.logout);
 authRouter.post(

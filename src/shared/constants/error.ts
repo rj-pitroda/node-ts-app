@@ -8,4 +8,5 @@ export const ERROR_MESSAGES = {
   UNAUTHORIZED: "Unauthorized access, please login again",
   FORBIDDEN: "Access denied",
   INVALID_RESET_TOKEN: "Invalid or expired reset token",
+  RATE_LIMIT_EXCEEDED: "Too many login attempts, Please try again later.",
 };
