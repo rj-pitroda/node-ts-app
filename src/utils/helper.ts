@@ -27,6 +27,9 @@ export const ENV_VAR = {
   SMTP_PASSWORD: getRequiredEnv("SMTP_PASSWORD"),
   SMTP_FROM: getRequiredEnv("SMTP_FROM"),
   FRONTEND_URL: getRequiredEnv("FRONTEND_URL"),
+  CLOUDINARY_CLOUD_NAME: getRequiredEnv("CLOUDINARY_CLOUD_NAME"),
+  CLOUDINARY_API_KEY: getRequiredEnv("CLOUDINARY_API_KEY"),
+  CLOUDINARY_API_SECRET: getRequiredEnv("CLOUDINARY_API_SECRET"),
 };
 
 export const parseDurationToMs = (duration: string): number => {
