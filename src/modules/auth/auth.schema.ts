@@ -24,6 +24,13 @@ export const signUpSchema = z.object({
       .max(100, "Name must be at most 100 characters long")
       .transform((name) => name.trim()),
   }),
+  files: z.object({
+    profileImage: z
+      .any()
+      .refine((file) => file !== undefined && file !== null, {
+        message: "Profile image is required",
+      }),
+  }),
 });
 
 export const forgotPasswordSchema = z.object({

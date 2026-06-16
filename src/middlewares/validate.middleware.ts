@@ -9,6 +9,7 @@ export const validate = (schema: ZodObject) => {
       body: req.body,
       query: req.query,
       params: req.params,
+      files: req.files,
     });
 
     if (!result.success) {
