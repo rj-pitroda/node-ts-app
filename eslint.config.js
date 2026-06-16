@@ -6,7 +6,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   {
-    ignores: ["_temp/**"],
+    ignores: ["_temp/**", "dist/**"],
   },
 
   js.configs.recommended,
