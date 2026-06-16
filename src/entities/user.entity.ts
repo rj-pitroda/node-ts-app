@@ -21,6 +21,16 @@ export class User {
   @Column("character varying", { name: "password", length: 60, select: false })
   password!: string;
 
+  @Column("character varying", { name: "imageURL", length: 500 })
+  imageUrl!: string;
+
+  @Column("character varying", {
+    name: "imgPublicId",
+    length: 255,
+    select: false,
+  })
+  imgPublicId!: string;
+
   @Column("integer", { name: "roleId" })
   roleId!: number;
 

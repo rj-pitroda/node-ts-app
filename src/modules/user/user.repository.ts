@@ -24,6 +24,7 @@ export class UserRepository extends BaseRepository<User> {
         role: {
           name: true,
         },
+        imageUrl: true,
       },
       relations: { role: true },
     });
