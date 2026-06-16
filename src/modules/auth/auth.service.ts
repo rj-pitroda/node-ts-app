@@ -9,11 +9,14 @@ import { ENV_VAR } from "../../utils/helper.ts";
 import { ObjectLiteral } from "typeorm";
 import { getForgotPasswordTemplate } from "../../templates/forgotPassword.template.ts";
 import { EmailService } from "../email/email.service.ts";
+import { RoleRepository } from "../role/role.repository.ts";
+import { USER_ROLE } from "../../shared/enum/enum.ts";
 
 export class AuthService {
   constructor(
     private userRepository: UserRepository,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private roleRepository: RoleRepository
   ) {}
 
   signUp = async (data: TSignUpSchema): Promise<boolean> => {
@@ -25,12 +28,16 @@ export class AuthService {
         StatusCodes.CONFLICT
       );
     }
+
+    const userRole = await this.roleRepository.findByName(USER_ROLE.USER);
+
     const hashedPassword = await this.bcryptPassword(data.password);
 
     await this.userRepository.create({
       name: data.name,
       email: data.email,
       password: hashedPassword,
+      roleId: userRole.id,
     });
 
     return true;

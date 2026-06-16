@@ -12,12 +12,18 @@ import {
 } from "./auth.schema.ts";
 import { EmailService } from "../email/email.service.ts";
 import { loginRateLimiter } from "../../middlewares/rateLimit.middleware.ts";
+import { RoleRepository } from "../role/role.repository.ts";
 
 const authRouter = Router();
 
 const userRepository = new UserRepository(User);
+const roleRepository = new RoleRepository();
 const emailService = new EmailService();
-const authService = new AuthService(userRepository, emailService);
+const authService = new AuthService(
+  userRepository,
+  emailService,
+  roleRepository
+);
 const authController = new AuthController(authService);
 
 authRouter.post("/register", validate(signUpSchema), authController.signUp);
