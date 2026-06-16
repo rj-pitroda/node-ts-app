@@ -5,11 +5,13 @@ import { ENV_VAR } from "./utils/helper.ts";
 import { AppDataSource } from "./config/db.ts";
 import appRouter from "./routes/index.ts";
 import { globalErrorMiddleware } from "./middlewares/globalError.middleware.ts";
+import { formidableMiddleware } from "./middlewares/formidable.middleware.ts";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(formidableMiddleware);
 app.use(
   cors({
     origin: "http://localhost:5173",
