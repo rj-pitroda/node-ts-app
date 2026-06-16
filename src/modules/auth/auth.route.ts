@@ -13,16 +13,19 @@ import {
 import { EmailService } from "../email/email.service.ts";
 import { loginRateLimiter } from "../../middlewares/rateLimit.middleware.ts";
 import { RoleRepository } from "../role/role.repository.ts";
+import { CloudinaryService } from "../cloudinary/cloudinary.service.ts";
 
 const authRouter = Router();
 
 const userRepository = new UserRepository(User);
 const roleRepository = new RoleRepository();
 const emailService = new EmailService();
+const cloudinaryService = new CloudinaryService();
 const authService = new AuthService(
   userRepository,
   emailService,
-  roleRepository
+  roleRepository,
+  cloudinaryService
 );
 const authController = new AuthController(authService);
 

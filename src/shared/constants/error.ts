@@ -14,4 +14,8 @@ export const ERROR_MESSAGES = {
   AUTH: {
     PROFILE_IMAGE_REQUIRED: "Profile image is required",
   },
+
+  CLOUDINARY: {
+    UPLOAD_FAILED: "Failed to upload image to Cloudinary",
+  },
 };

@@ -3,13 +3,18 @@ import { AuthService } from "./auth.service.ts";
 import { sendSuccessResponse } from "../../shared/sendResponse.ts";
 import { MSG } from "../../shared/constants/messages.ts";
 import { ENV_VAR, parseDurationToMs } from "../../utils/helper.ts";
+import formidable from "formidable";
 
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   signUp = async (req: Request, res: Response) => {
-    const newUser = await this.authService.signUp(req.body);
+    const files = req.files;
 
+    const newUser = await this.authService.signUp(
+      req.body,
+      files!.profileImage as formidable.File[]
+    );
     return sendSuccessResponse(res, {
       data: newUser,
       message: MSG.AUTH.USER_REGISTERED_SUCCESS,

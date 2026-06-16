@@ -11,15 +11,21 @@ import { getForgotPasswordTemplate } from "../../templates/forgotPassword.templa
 import { EmailService } from "../email/email.service.ts";
 import { RoleRepository } from "../role/role.repository.ts";
 import { USER_ROLE } from "../../shared/enum/enum.ts";
+import formidable from "formidable";
+import { CloudinaryService } from "../cloudinary/cloudinary.service.ts";
 
 export class AuthService {
   constructor(
     private userRepository: UserRepository,
     private emailService: EmailService,
-    private roleRepository: RoleRepository
+    private roleRepository: RoleRepository,
+    private cloudinaryService: CloudinaryService
   ) {}
 
-  signUp = async (data: TSignUpSchema): Promise<boolean> => {
+  signUp = async (
+    data: TSignUpSchema,
+    files: formidable.File[]
+  ): Promise<boolean> => {
     const user = await this.userRepository.findByEmail(data.email);
 
     if (user) {
@@ -28,6 +34,12 @@ export class AuthService {
         StatusCodes.CONFLICT
       );
     }
+
+    const result = await this.cloudinaryService.uploadImage(
+      files[0].filepath,
+      "userImages",
+      files[0].originalFilename
+    );
 
     const userRole = await this.roleRepository.findByName(USER_ROLE.USER);
 
@@ -38,6 +50,8 @@ export class AuthService {
       email: data.email,
       password: hashedPassword,
       roleId: userRole.id,
+      imageUrl: result.secure_url,
+      imgPublicId: result.public_id,
     });
 
     return true;
