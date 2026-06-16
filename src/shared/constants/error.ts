@@ -9,4 +9,9 @@ export const ERROR_MESSAGES = {
   FORBIDDEN: "Access denied",
   INVALID_RESET_TOKEN: "Invalid or expired reset token",
   RATE_LIMIT_EXCEEDED: "Too many login attempts, Please try again later.",
+  ROLE_NOT_FOUND: "Role not found",
+
+  AUTH: {
+    PROFILE_IMAGE_REQUIRED: "Profile image is required",
+  },
 };
