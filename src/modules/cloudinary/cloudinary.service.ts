@@ -36,4 +36,16 @@ export class CloudinaryService {
       );
     }
   };
+
+  deleteImage = async (publicId: string): Promise<any> => {
+    try {
+      const result = await cloudinary.uploader.destroy(publicId);
+      return result;
+    } catch {
+      throw new AppError(
+        ERROR_MESSAGES.CLOUDINARY.DELETE_FAILED,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  };
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createFileSchema } from "../../utils/fileValidation.ts";
 
 export const loginSchema = z.object({
   body: z
@@ -25,11 +26,7 @@ export const signUpSchema = z.object({
       .transform((name) => name.trim()),
   }),
   files: z.object({
-    profileImage: z
-      .any()
-      .refine((file) => file !== undefined && file !== null, {
-        message: "Profile image is required",
-      }),
+    profileImage: createFileSchema(),
   }),
 });
 

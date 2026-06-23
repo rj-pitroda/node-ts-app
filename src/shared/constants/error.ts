@@ -15,7 +15,15 @@ export const ERROR_MESSAGES = {
     PROFILE_IMAGE_REQUIRED: "Profile image is required",
   },
 
+  FILE: {
+    REQUIRED: "Profile image is required",
+    LIMIT_SIZE: "File size must not exceed 2MB",
+    INVALID_TYPE: "Invalid file type. Only JPEG, PNG, and JPG are allowed",
+    LIMIT_NAME: "File name is too long",
+  },
+
   CLOUDINARY: {
     UPLOAD_FAILED: "Failed to upload image to Cloudinary",
+    DELETE_FAILED: "Failed to delete image from Cloudinary",
   },
 };
